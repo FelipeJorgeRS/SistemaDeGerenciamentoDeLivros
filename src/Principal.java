@@ -31,9 +31,10 @@ public class Principal {
             }
 
             // Criando uma nova instância da classe QuickSort
+           
             QuickSort quickSort = new QuickSort();
-
             // Ordenando a lista de livros usando o QuickSort
+            
             quickSort.sort(livros, 0, livros.size()-1);
 
             // Imprima a lista de livros
