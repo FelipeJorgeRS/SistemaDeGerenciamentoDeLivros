@@ -14,5 +14,26 @@ public class Livro {
 		this.criterioDeOrdenacao= criterioDeOrdenacao;
 	}
 
+	public String getTitulo() {
+		return this.titulo;
+			
+	}
 
+	public String getAutor() {
+		return this.autor;
+	}
+
+	public String getISBN() {
+		return this.ISBN;
+	}
+
+	public String getDisponibilidade() {
+		return this.disponibilidade;
+	}
+
+	public String getCriterioDeOrdenacao() {
+		return this.criterioDeOrdenacao;
+	}
+
+	
 }
