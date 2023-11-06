@@ -121,7 +121,7 @@ public class Lista {
 		return (this.primeiro == this.ultimo);
 		}
 	
-	public void imprime () {
+	public void imprime (Livro novoLivro) {
 		Celula aux = this.primeiro.prox;
 		while (aux != null) {
 		System.out.println (aux.item.toString()); 

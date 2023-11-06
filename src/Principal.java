@@ -43,6 +43,7 @@ public class Principal {
                 String titulo=leitor.nextLine();
                 livros.retiraPorTitulo(titulo);
                
+                livros.imprime(novoLivro);
                 System.out.println(meuLivro);
            
                 System.out.println("Digite o critério de ordenação (titulo ou autor):");
