@@ -185,6 +185,69 @@ public class Lista {
         }
     }
 
+    public void consultaEstado(String isbn) {
+        Celula aux = this.primeiro;
+        while (aux.prox != null) {
+            Livro livro = (Livro) aux.prox.item;
+            if (livro.getISBN().equals(isbn)) {
+                System.out.println("O estado do livro " + livro.getTitulo() + " é " + livro.getDisponibilidade());
+                return;
+            }
+            aux = aux.prox;
+        }
+        System.out.println("Livro não encontrado");
+    }
+
+    public void devolveLivro(String isbn) {
+        Celula aux = this.primeiro;
+        while (aux.prox != null) {
+            Livro livro = (Livro) aux.prox.item;
+            if (livro.getISBN().equals(isbn) && livro.getDisponibilidade().equals("emprestado")) {
+                livro.disponibilidade = "disponível";
+                System.out.println("Você devolveu o livro " + livro.getTitulo() + ".");
+                return;
+            }
+            aux = aux.prox;
+        }
+        System.out.println("Livro não encontrado ou não estava emprestado");
+    }
+    
+    public void pegaLivroEmprestado(String isbn) {
+        Celula aux = this.primeiro;
+        while (aux.prox != null) {
+            Livro livro = (Livro) aux.prox.item;
+            if (livro.getISBN().equals(isbn) && livro.getDisponibilidade().equals("disponível")) {
+                livro.disponibilidade = "emprestado";
+                System.out.println("Você pegou o livro " + livro.getTitulo() + " emprestado.");
+                return;
+            }
+            aux = aux.prox;
+        }
+        System.out.println("Livro não encontrado ou não estava disponível");
+    }
+    
+    public void reservaLivro(String isbn) {
+        Celula aux = this.primeiro;
+        while (aux.prox != null) {
+            Livro livro = (Livro) aux.prox.item;
+            if (livro.getISBN().equals(isbn)) {
+                if (livro.getDisponibilidade().equals("disponível")) {
+                    livro.disponibilidade = "reservado";
+                    System.out.println("Você reservou o livro " + livro.getTitulo() + ".");
+                } else if (livro.getDisponibilidade().equals("reservado")) {
+                    System.out.println("O livro " + livro.getTitulo() + " já está reservado.");
+                } else {
+                    System.out.println("O livro " + livro.getTitulo() + " já está " + livro.getDisponibilidade() + ".");
+                }
+                return;
+            }
+            aux = aux.prox;
+        }
+        System.out.println("Livro não encontrado");
+    }
+
+
+
 
  // Método para ordenar a lista de livros usando o algoritmo Bubble Sort
     public void ordenaBubbleSort(String criterio) {
