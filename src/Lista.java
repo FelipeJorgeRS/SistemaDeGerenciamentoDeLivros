@@ -8,6 +8,29 @@ public class Lista {
         Object item;
         Celula prox;
     }
+    
+    public String insereLivroCSV(String csvFile) {
+        String line;
+        String csvSplitBy = ",";
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            while ((line = br.readLine()) != null) {
+                String[] livro = line.split(csvSplitBy);
+                if (livro.length < 5) {
+                    System.out.println("Linha inválida no CSV: " + line);
+                    continue;
+                }
+                Livro novoLivroCriado = new Livro(livro[0], livro[1], livro[2], livro[3], livro[4]);
+
+                this.ultimo.prox = new Celula();
+                this.ultimo = this.ultimo.prox;
+                this.ultimo.item = novoLivroCriado; // Use novoLivroCriado aqui
+                this.ultimo.prox = null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Os livros foram inseridos com sucesso!";
+    }
 
     private Celula primeiro, ultimo, pos;
 
@@ -33,26 +56,7 @@ public class Lista {
     }
    
     
-    public String insereLivroCSV(String csvFile) {
-        String line;
-        String csvSplitBy = ",";
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            while ((line = br.readLine()) != null) {
-                String[] livro = line.split(csvSplitBy);
-                Livro novoLivroCriado = new Livro(livro[0], livro[1], livro[2], livro[3], livro[4]);
 
-                this.ultimo.prox = new Celula();
-                this.ultimo = this.ultimo.prox;
-                this.ultimo.item = novoLivroCriado; // Use novoLivroCriado aqui
-                this.ultimo.prox = null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "Os livros foram inseridos com sucesso!";
-    }
-
-    
     public Livro insere() {
         Scanner leitor = new Scanner(System.in);
         System.out.println("Digite o título do livro:");
@@ -78,8 +82,6 @@ public class Lista {
         return novoLivro;
     }
 
-
-  
     public String retiraPorTitulo(String titulo) throws Exception {
         if (this.vazia() || (titulo == null || titulo.trim().isEmpty())) {
             throw new Exception("Erro: Lista vazia ou título inválido");
@@ -103,8 +105,6 @@ public class Lista {
     }
     
     
-    
-
     public String consultaPorTitulo(String titulo) {
         if (this.vazia() || (titulo == null || titulo.trim().isEmpty())) {
             return "Título inválido ou acervo vazio.";
@@ -157,53 +157,78 @@ public class Lista {
         return (this.primeiro == this.ultimo);
     }
 
-    public void imprime() {
-        Celula aux = this.primeiro.prox;
-        while (aux != null) {
-            System.out.println(aux.item.toString());
-            aux = aux.prox;
+
+    public void imprimirTitulos() {
+        Lista.Celula i = this.primeiro;
+        while (i != null) {
+            Livro livro = (Livro) i.item;
+            if (livro != null) {
+                System.out.println("Título: " + livro.getTitulo());
+            } else {
+                System.out.println("O item é nulo");
+            }
+            i = i.prox;
         }
     }
 
 
-
-
-
+    public void imprimirAutores() {
+        Lista.Celula i = this.primeiro;
+        while (i != null) {
+            Livro livro = (Livro) i.item;
+            if (livro != null) {
+            System.out.println("Autor: " + livro.getAutor());
+            }else {
+                System.out.println("O item é nulo");
+            }
+            i = i.prox;
+        }
+    }
 
 
  // Método para ordenar a lista de livros usando o algoritmo Bubble Sort
-    public static void ordenaBubbleSort(Lista lista, String criterio) {
-        if (lista.vazia()) {
+    public void ordenaBubbleSort(String criterio) {
+        // Verifica se a lista está vazia
+        if (this.vazia()) {
             return;
         }
 
-        Lista.Celula i = lista.primeiro;
+        // Loop externo que percorre a lista
+        Celula i = this.primeiro;
         while (i != null) {
-            Lista.Celula j = lista.primeiro.prox;
+            // Loop interno que percorre a lista a partir do segundo elemento
+            Celula j = this.primeiro.prox;
             while (j.prox != null) {
+                // Recupera os livros nas posições atual e próxima
                 Livro livro1 = (Livro) j.item;
                 Livro livro2 = (Livro) j.prox.item;
 
                 int comparacao;
+                // Compara os livros com base no critério fornecido
                 if (criterio.equals("titulo")) {
                     comparacao = livro1.getTitulo().compareTo(livro2.getTitulo());
                 } else if (criterio.equals("autor")) {
                     comparacao = livro1.getAutor().compareTo(livro2.getAutor());
                 } else {
+                    // Lança uma exceção se o critério não for válido
                     throw new IllegalArgumentException("Critério de ordenação inválido: " + criterio);
                 }
 
+                // Se o livro na posição atual for maior que o próximo, eles são trocados
                 if (comparacao > 0) {
                     Object temp = j.item;
                     j.item = j.prox.item;
                     j.prox.item = temp;
                 }
 
+                // Avança para o próximo par de elementos
                 j = j.prox;
             }
+            // Avança para o próximo elemento no loop externo
             i = i.prox;
         }
     }
+
 
 	
 

@@ -7,8 +7,8 @@ public class Principal {
 
     public static void main(String[] args) throws Exception {
     	String csvFile = "C:\\Users\\Felipe Jorge\\eclipse-workspace\\SistemaDeGerenciamentoDeLivros\\CADASTRO-100-LIVROS.csv";
-    	Lista livros = new Lista();
-    	livros.insereLivroCSV(csvFile);
+    	Lista livro = new Lista();
+    	livro.insereLivroCSV(csvFile);
 
         Scanner leitor = new Scanner(System.in);
 
@@ -30,7 +30,7 @@ public class Principal {
                     // Consulta um livro por título
                     System.out.println("Digite o título do livro que deseja consultar:");
                     String tituloConsulta = leitor.nextLine();
-                    String livroTitulo = livros.consultaPorTitulo(tituloConsulta);
+                    String livroTitulo = livro.consultaPorTitulo(tituloConsulta);
                     if (livroTitulo != null) {
                         System.out.println(livroTitulo);
                     } else {
@@ -41,27 +41,29 @@ public class Principal {
                     // Consulta um livro por autor
                     System.out.println("Digite o autor do livro que deseja consultar:");
                     String autorConsulta = leitor.nextLine();
-                    String resultado = livros.consultaPorAutor(autorConsulta);
+                    String resultado = livro.consultaPorAutor(autorConsulta);
                     System.out.println(resultado);
                     break;
                 case 3:
                     // Insere um novo livro
-                    Livro novoLivro = livros.insere();
+                    Livro novoLivro = livro.insere();
                     break;
                 case 4:
                     // Remove um livro
                     System.out.println("Digite o título do livro que deseja remover:");
                     String titulo = leitor.nextLine();
-                    String mensagem = livros.retiraPorTitulo(titulo);
+                    String mensagem = livro.retiraPorTitulo(titulo);
                     System.out.println(mensagem);
                     break;
                 case 5:
                     // Ordena livros por título
-                    livros.ordenaPorTitulo();
-                    break;
+                	livro.ordenaBubbleSort("titulo"); 
+                	livro.imprimirTitulos();
+                	break;
                 case 6:
                     // Ordena livros por autor
-                    livros.ordenaPorAutor();
+                	livro.ordenaBubbleSort("autor"); 
+                	livro.imprimirAutores();
                     break;
                 case 7:
                     continuar = false;
@@ -73,7 +75,6 @@ public class Principal {
 // PAREI FAZENDO A CONFIGURAÇÃO DO MÉTOD BUBLESORT PARA PERMITIR A ORDENAÇÃO POR TITULO OU AUTOR
         // O PROXIOMO PASSO É IMPRIMIR A LISTA COMPLETA ORDENADA
         
-        // Imprime todos os livros na lista após a ordenação
-        livros.imprime();
+      
     }
 }
